@@ -1,7 +1,7 @@
 import { useContext } from "react";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
-import InfoContext from "../APIContext/InforContext";
+import InfoContext from "../../APIContext/InforContext";
 
 export default function Top () {
 
@@ -29,7 +29,7 @@ const TopDiv = styled.div`
     justify-content: space-between;
     padding: 0px 15px;
     box-shadow: 0px 0px 6px 2px grey;
-
+    z-index: 1;
     span {
     color: #FFFFFF;
     font-size: 39px;

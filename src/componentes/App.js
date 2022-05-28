@@ -3,7 +3,8 @@ import { useState } from "react";
 import InfoContext from "./APIContext/InforContext";
 import Login from "./FrontPages/Login";
 import Register from "./FrontPages/Register";
-import Habits from "./UsabelsPages/LayoutHabits";
+import LayoutHabits from "./HabitsPage/LayoutHabits";
+import Today from "./TodayHabits/Today";
 
 
 export default function App () {
@@ -22,8 +23,8 @@ export default function App () {
             <Routes>
                 <Route path="/" element={<Login />} />
                 <Route path="/cadastro" element={<Register />} /> 
-                <Route path="/habitos" element={<Habits />} />
-
+                <Route path="/habitos" element={<LayoutHabits />} />
+                <Route path="/hoje" element={<Today />} />
             </Routes>
         </BrowserRouter>
         </InfoContext.Provider>
