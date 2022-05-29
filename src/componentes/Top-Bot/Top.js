@@ -1,16 +1,17 @@
 import { useContext } from "react";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
-import InfoContext from "../../APIContext/InforContext";
+import InfoContext from "../APIContext/InforContext";
+
 
 export default function Top () {
 
-    const { userInfos, setUserInfos } = useContext(InfoContext);
+    const { userInfos } = useContext(InfoContext);
     return (
         <Link to="/">
         <TopDiv>
             <span>TrackIt</span>
-            <img src={userInfos.image} width="51" height="51" />
+            <img src={userInfos.image} alt="Profile" width="51" height="51" />
         </TopDiv>
         </Link>
         );

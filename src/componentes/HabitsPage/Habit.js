@@ -8,7 +8,7 @@ import InfoContext from "../APIContext/InforContext";
 export default function Habit ( { name, id, days, reload } ) {
     let allDays = [1, 2, 3, 4, 5, 6, 7];
     let newData = [];
-    const {userInfos, setUserInfos} = useContext(InfoContext);
+    const {userInfos} = useContext(InfoContext);
 
     function verification () {
      newData = allDays.map(num => {

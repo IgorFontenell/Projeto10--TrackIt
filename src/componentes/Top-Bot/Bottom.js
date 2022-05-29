@@ -1,15 +1,21 @@
-import {
-    CircularProgressbar,
-    CircularProgressbarWithChildren,
-    buildStyles
-  } from "react-circular-progressbar";
+import { CircularProgressbar, buildStyles } from "react-circular-progressbar";
 import { Link } from "react-router-dom";
+import { useContext } from "react";
 import 'react-circular-progressbar/dist/styles.css';
 import styled from "styled-components"
+import DoneContext from "../APIContext/DoneContext";
+
+
+
 
 
 export default function Bottom () {
 
+    const { habitsDone } = useContext(DoneContext);
+
+    
+    console.log(habitsDone);
+    
 
     return (
         <BottomDiv>
@@ -18,7 +24,7 @@ export default function Bottom () {
             </Link>
             <Link to="/hoje">
                 <div style={{ width: 100, height: 100 }}>
-                    <CircularProgressbar value={66}  text={"Hoje"} strokeWidth={10} background
+                    <CircularProgressbar value={habitsDone}  text={"Hoje"} strokeWidth={10} background
                         backgroundPadding={6}
                         styles={buildStyles({
                         backgroundColor: "#3e98c7",

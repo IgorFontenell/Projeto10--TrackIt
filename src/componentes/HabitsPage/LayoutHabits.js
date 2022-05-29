@@ -1,12 +1,12 @@
 import { useContext, useEffect, useState } from "react";
 import axios from "axios";
-import Top from "../Top/BotBars/Top";
+import Top from "../Top-Bot/Top";
 import styled from "styled-components";
 import Habit from "./Habit";
 import InfoContext from "../APIContext/InforContext";
 import NewHabit from "./NewHabit";
 import Nothing from "./Nothing";
-import Bottom from "../Top/BotBars/Bottom";
+import Bottom from "../Top-Bot/Bottom";
 
 
 
@@ -14,9 +14,9 @@ export default function LayoutHabits () {
 
     const [createHabit, setCreateHabit] = useState("false");
     const [habitsInfo, setHabitsInfo] = useState([]);
-    console.log(habitsInfo);
+    
     // Getting the user infos
-    const { userInfos, setuserInfos } = useContext(InfoContext);
+    const { userInfos } = useContext(InfoContext);
 
     // Creating the token that validates my acess to the API
     const config = {

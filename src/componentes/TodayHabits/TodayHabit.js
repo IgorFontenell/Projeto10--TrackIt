@@ -3,40 +3,58 @@ import styled from "styled-components";
 import axios from "axios";
 import InfoContext from "../APIContext/InforContext";
 
-
-export default function TodayHabit ( { title, done, id, currentSequence, highestSequence } ) {
+// Here we are creating the function that writes each Today Habit Box
+export default function TodayHabit ( { title, done, id, currentSequence, highestSequence, attHabitsDone } ) {
     
+    console.log("sera que vai rendezir o hábito dnv?")
+    // Creating the variable of state that tell us if the Habit were done today
     const[isDone, setIsDone] = useState(done);
-    const{userInfos, setUserInfos} = useContext(InfoContext);
+    
 
+    // Getting the user information
+    const{ userInfos } = useContext(InfoContext);
+
+     // Creating the Token to acess the API
+     const config = {
+        headers: {
+            "Authorization": `Bearer ${userInfos.token}`
+        }
+    }
+
+    
+    
+
+
+
+    // Function called to tell the API that the habit were completed
     function attAPI () {
-        const config = {
-            headers: {
-                "Authorization": `Bearer ${userInfos.token}`
-            }
-        }; 
+
+        // Here we are creating the 2 situations about the habit selected.
+        //If the isDone === false, means that we are selecting it to change it to be complet. We are sendding the information to the API to change the status of it.
         if (isDone === false) {
-            let requisition = axios.post(`https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits/${id}/check`, config);
+            let requisition = axios.post(`https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits/${id}/check`, null, config);
             requisition.then(() => {
-                setUserInfos(!isDone)
-                alert("Tarefa Concluída!");
+                setIsDone(!isDone);
+                //attHabitsDone();
             });
-            requisition.catch(err => alert(err.response.status - err.response.data.message));
+            requisition.catch(err => alert(`${err.response.status} - ${err.response.data.message}`));
+
+          //If the isDone === true, means that we are deselectin it to change it to be yet done. We are sendding the information to the API to change the status of it. 
         } else if (isDone === true) {
-            let requisition = axios.post(`https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits/${id}/uncheck`, config);
+            let requisition = axios.post(`https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits/${id}/uncheck`, null, config);
             requisition.then(() => {
-                setUserInfos(!isDone)
-                alert("Tarefa Desmarcada!");
+                setIsDone(!isDone);
+                //attHabitsDone();
             });
             requisition.catch(err => alert(err.response.status - err.response.data.message));
         }
     }
     
     return (
-            <Box done={isDone} id={id} onClick={attAPI}>
+            <Box done={isDone} id={id} onClick={attAPI} isEqual={currentSequence === highestSequence}>
                 <Content>
                     <span>{title}</span>
-                    <span>{`Sequência atual ${currentSequence}`}</span>
+                    <span>{`Sequência atual: ${currentSequence}`}</span>
                     <span>{`Seu record: ${highestSequence}`}</span>
                 </Content>
                 <ion-icon name="checkbox"></ion-icon>
@@ -80,9 +98,12 @@ const Content = styled.div`
     span:nth-child(2) {
         font-size: 13px;
         margin-bottom: 5px;
+        color: ${props => props.done ? "#8FC549" : "#666666"};
+        
     }
     span:nth-child(3) {
         font-size: 13px;
+        color: ${props => (props.done && props.isEqual) ? "#8FC549" : "#666666"};
     }
 
 

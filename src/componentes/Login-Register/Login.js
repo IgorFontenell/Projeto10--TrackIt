@@ -11,7 +11,7 @@ export default function Login () {
     const navigate = useNavigate();
 
     // Getting the APIContext info
-    const { userInfos, setUserInfos } = useContext(InfoContext);
+    const { setUserInfos } = useContext(InfoContext);
     
 
     // Estate variable that has the inputs values
@@ -43,7 +43,7 @@ export default function Login () {
                 token: ans.data.token
             });
 
-            navigate("/habitos");
+            navigate("/hoje");
         });
         requisition.catch(err => alert(`${err.response.status} - ${err.response.data.message}`));
 
@@ -110,6 +110,7 @@ const Container = styled.div`
         justify-content: center;
         border-radius: 5px;
         margin-bottom: 10px;
+        border: none;
         span {
             color: #FFFFFF;
             font-size: 21px;
@@ -120,6 +121,7 @@ const Container = styled.div`
         display: flex;
         justify-content: center;
         color: #52B6FF;
+        
     }
     span {
         color: #52B6FF;

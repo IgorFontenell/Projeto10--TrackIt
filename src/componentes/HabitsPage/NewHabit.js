@@ -8,7 +8,7 @@ import Square from "./Square";
 export default function NewHabit ( { setCreateHabit, reload } ) {
 
     // Here, we are getting the UserInfos saved
-    const { userInfos, setuserInfos } = useContext(InfoContext);
+    const { userInfos } = useContext(InfoContext);
     
     
     // Here, we created the state variable so we can stock the value of the creating Habit
