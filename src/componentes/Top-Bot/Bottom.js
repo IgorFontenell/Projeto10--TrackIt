@@ -14,7 +14,7 @@ export default function Bottom () {
     const { habitsDone } = useContext(DoneContext);
 
     
-    console.log(habitsDone);
+   
     
 
     return (

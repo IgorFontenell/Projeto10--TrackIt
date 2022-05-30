@@ -33,7 +33,7 @@ export default function TodayPage () {
                 if(totalHabits === 0){
                 setHabitsDone (0);
                 } else {
-                    setHabitsDone ((doneHabits/totalHabits)*100);
+                    setHabitsDone (Math.ceil((doneHabits/totalHabits)*100));
                 }
                 });
 
@@ -55,10 +55,10 @@ export default function TodayPage () {
     useEffect((() => {
         const requisition = axios.get("https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits/today", config);
         requisition.then(ans => {
-            console.log(ans);
+            
             setHabits(ans.data);
             attHabitsDone();
-            console.log("Atualizei")
+            
         });
     }), []);
 
@@ -90,13 +90,13 @@ export default function TodayPage () {
 
     }
     
-    console.log(habitsDone);
+    
 
     return (
         <Container>
             <Top />
             <h1><DayOfToday /></h1>
-            {habitsDone === 0 ? <h2>Nenhum hábito concluído ainda</h2> : <h3>{habitsDone} dos hábitos concluídos</h3>}
+            {habitsDone === 0 ? <h2>Nenhum hábito concluído ainda</h2> : <h3>{habitsDone}% dos hábitos concluídos</h3>}
             {habits.length !== 0 ? <TodayHabitList /> : <div></div>}
             <Bottom />
         </Container>

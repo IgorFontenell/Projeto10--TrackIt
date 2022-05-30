@@ -6,7 +6,7 @@ import InfoContext from "../APIContext/InforContext";
 // Here we are creating the function that writes each Today Habit Box
 export default function TodayHabit ( { title, done, id, currentSequence, highestSequence, attHabitsDone } ) {
     
-    console.log("sera que vai rendezir o hábito dnv?")
+    
     // Creating the variable of state that tell us if the Habit were done today
     const[isDone, setIsDone] = useState(done);
     
@@ -35,7 +35,7 @@ export default function TodayHabit ( { title, done, id, currentSequence, highest
             let requisition = axios.post(`https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits/${id}/check`, null, config);
             requisition.then(() => {
                 setIsDone(!isDone);
-                //attHabitsDone();
+                attHabitsDone();
             });
             requisition.catch(err => alert(`${err.response.status} - ${err.response.data.message}`));
 
@@ -44,7 +44,7 @@ export default function TodayHabit ( { title, done, id, currentSequence, highest
             let requisition = axios.post(`https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits/${id}/uncheck`, null, config);
             requisition.then(() => {
                 setIsDone(!isDone);
-                //attHabitsDone();
+                attHabitsDone();
             });
             requisition.catch(err => alert(err.response.status - err.response.data.message));
         }
