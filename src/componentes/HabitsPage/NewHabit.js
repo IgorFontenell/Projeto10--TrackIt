@@ -7,11 +7,13 @@ import { ThreeDots } from  'react-loader-spinner'
 
 export default function NewHabit ( { setCreateHabit, reload } ) {
 
-    // Here, we are getting the UserInfos saved
+    // Here, we are getting the UserInfos saved.
     const { userInfos } = useContext(InfoContext);
     
+    // Here we created a State variable that represent the act of waiting for a response from the API.
     const [isLoading, setIsLoading] = useState(false);
 
+    // A function that desativates the button while waiting for the API to work. We are putting a delay gif to make more USER friendly.
     function IsButton () {
 
         if (isLoading === false) {
@@ -33,19 +35,20 @@ export default function NewHabit ( { setCreateHabit, reload } ) {
 
     }
     
-    // Here, we created the state variable so we can stock the value of the creating Habit
+    // Here, we created the state variable so we can stock the value of the creating Habit.
     const [newHabitInfo, setNewHabitInfo] = useState({
         name: "",
         days: ""
     });
     
-    // Here, we Att the name of the habit  that were written
+    // Here, we update the name of the habit  that were written.
     function attName(e) {
         setNewHabitInfo({
             ...newHabitInfo, ["name"]:  e.target.value,
         });
     }
     
+    // The function that cleans the information that were writen and closes the New Habit windown.
     function cancel() {
         setCreateHabit(false);
         setNewHabitInfo({
@@ -55,7 +58,7 @@ export default function NewHabit ( { setCreateHabit, reload } ) {
     }
     
 
-    // Here, we create the toke to acess the server(config variable) and send to the server the infos that we colected, with the the token
+    // Here, we create the toke to acess the server(config variable) and send to the server the infos that we colected, with the token as the key.
     function sendInfo () {
         if (newHabitInfo.name === "" || newHabitInfo.days === "") {
             alert("Dados incompletos, favor terminar o preenchimento")
@@ -83,7 +86,7 @@ export default function NewHabit ( { setCreateHabit, reload } ) {
         <Box disabled>
             <input type="name" placeholder="nome do hábito" onChange={attName}></input>
             <Squares>
-                <Square newHabitInfo={newHabitInfo} setNewHabitInfo={setNewHabitInfo} value="D" number={7} />
+                <Square newHabitInfo={newHabitInfo} setNewHabitInfo={setNewHabitInfo} value="D" number={0} />
                 <Square newHabitInfo={newHabitInfo} setNewHabitInfo={setNewHabitInfo} value="S" number={1} />
                 <Square newHabitInfo={newHabitInfo} setNewHabitInfo={setNewHabitInfo} value="T" number={2} />
                 <Square newHabitInfo={newHabitInfo} setNewHabitInfo={setNewHabitInfo} value="Q" number={3} />

@@ -7,6 +7,7 @@ import InfoContext from "../APIContext/InforContext";
 export default function Top () {
 
     const { userInfos } = useContext(InfoContext);
+    
     return (
         <Link to="/">
         <TopDiv>

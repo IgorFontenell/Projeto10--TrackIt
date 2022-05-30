@@ -1,17 +1,16 @@
-import { useContext, useEffect, useState } from "react";
+import { useContext } from "react";
 import styled from "styled-components";
 import Bottom from "../Top-Bot/Bottom";
 import Top from "../Top-Bot/Top";
-import axios from "axios";
 import InfoContext from "../APIContext/InforContext";
 
 
 export default function HistoryPage () {
 
-    // Getting back the infos about the user
+    // Getting back the infos about the user.
     const { userInfos } = useContext(InfoContext);
 
-    // Creating the Token to acess the server
+    // Creating the Token to acess the server.
     const config = {
         headers: {
             "Authorization": `Bearer ${userInfos.token}`

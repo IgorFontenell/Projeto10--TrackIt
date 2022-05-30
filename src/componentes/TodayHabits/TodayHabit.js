@@ -7,7 +7,7 @@ import InfoContext from "../APIContext/InforContext";
 export default function TodayHabit ( { title, done, id, currentSequence, highestSequence, attHabitsDone } ) {
     
     
-    // Creating the variable of state that tell us if the Habit were done today
+    // Creating the State variable that tell us if the Habit were done today
     const[isDone, setIsDone] = useState(done);
     
 
@@ -30,7 +30,7 @@ export default function TodayHabit ( { title, done, id, currentSequence, highest
     function attAPI () {
 
         // Here we are creating the 2 situations about the habit selected.
-        //If the isDone === false, means that we are selecting it to change it to be complet. We are sendding the information to the API to change the status of it.
+        //If the isDone === false, means that we are selecting it to change it to be complet. We are sendding the information to the API to change the status of it. And update the State variable in the Bottom so the percentage is correct and always updated.
         if (isDone === false) {
             let requisition = axios.post(`https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits/${id}/check`, null, config);
             requisition.then(() => {
@@ -39,7 +39,7 @@ export default function TodayHabit ( { title, done, id, currentSequence, highest
             });
             requisition.catch(err => alert(`${err.response.status} - ${err.response.data.message}`));
 
-          //If the isDone === true, means that we are deselectin it to change it to be yet done. We are sendding the information to the API to change the status of it. 
+          //If the isDone === true, means that we are deselectin it to change it to be yet done. We are sendding the information to the API to change the status of it. And update the State variable in the Bottom so the percentage is correct and always updated.
         } else if (isDone === true) {
             let requisition = axios.post(`https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits/${id}/uncheck`, null, config);
             requisition.then(() => {
@@ -48,14 +48,19 @@ export default function TodayHabit ( { title, done, id, currentSequence, highest
             });
             requisition.catch(err => alert(err.response.status - err.response.data.message));
         }
+
     }
     
     return (
-            <Box done={isDone} id={id} onClick={attAPI} isEqual={currentSequence === highestSequence}>
-                <Content>
+            <Box done={isDone} id={id} onClick={attAPI}>
+                <Content done={isDone} isEqual={currentSequence === highestSequence}>
                     <span>{title}</span>
-                    <span>{`Sequência atual: ${currentSequence}`}</span>
-                    <span>{`Seu record: ${highestSequence}`}</span>
+                    <div>
+                        <h4>Sequência atual:  </h4><h5>{`${currentSequence} dias`}</h5>
+                    </div>
+                    <div>
+                        <h4>Seu record:  </h4><h6>{`${highestSequence} dias`}</h6>
+                    </div>
                 </Content>
                 <ion-icon name="checkbox"></ion-icon>
             </Box>
@@ -87,24 +92,38 @@ const Content = styled.div`
     flex-direction: column;
     color: #666666;
 
-    span {
+    span:first-child {
+        font-size: 20px;
         display: inline-block;
         font-family: 'Roboto', sans-serif;
+        margin-bottom: 10px;
     }
-    span:nth-child(1) {
-        font-size: 20px;
-        margin-bottom: 15px;
-    }
-    span:nth-child(2) {
-        font-size: 13px;
+    div {
+        display: flex;
+        align-items: center;
         margin-bottom: 5px;
-        color: ${props => props.done ? "#8FC549" : "#666666"};
-        
+        h4 {
+            font-family: 'Roboto', sans-serif;
+            font-size: 14px;
+            color: #666666;
+        }
+        h5 {
+            font-family: 'Roboto', sans-serif;
+            font-size: 14px;
+            display: inline-block;
+            margin-left: 5px;
+            color: ${props => props.done ? "#8FC549" : "#666666"};
+        }
+        h6 {
+            font-family: 'Roboto', sans-serif;
+            font-size: 14px;
+            display: inline-block;
+            margin-left: 5px;
+            color: ${props => props.done && props.isEqual ? "#8FC549" : "#666666"};
+
+        }
     }
-    span:nth-child(3) {
-        font-size: 13px;
-        color: ${props => (props.done && props.isEqual) ? "#8FC549" : "#666666"};
-    }
+   
 
 
 `;

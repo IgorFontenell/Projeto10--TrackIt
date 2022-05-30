@@ -15,7 +15,7 @@ export default function Login () {
     
     const [isLoading, setIsLoading] = useState(false);
 
-
+    // A function that desativates the button while waiting for the API to work. We are putting a delay gif to make more USER friendly.
     function IsButton () {
 
         if (isLoading === false) {
@@ -33,20 +33,20 @@ export default function Login () {
         }
 
     }
-    // Estate variable that has the inputs values
+    // Estate variable that has the inputs values.
     const [ form, setForm ] = useState({
         email: "",
         password: "",
     })
 
-    // Function called when has some changing in the input field
+    // Function called when has some changing in the input field.
     function attForms (event) {
         setForm({
             ...form, [event.target.name]: event.target.value
         });
     }
 
-    // Here's the main function. When the user click on the button, this function is called and the things that it do are: prevent the automatic reload of the page, send the email and password to the server, att the estate variable with the client infos that are in the server, navigate to the next page and send a error alert in case of failer.
+    // Here's the main function. When the user click on the button, this function is called and the things that it do are: prevent the automatic reload of the page, send the email and password to the server, update the state variable with the client infos that are in the server, navigate to the next page and send a error alert in case of failer.
     function loginInto (event) {
         event.preventDefault();
         setIsLoading(true);

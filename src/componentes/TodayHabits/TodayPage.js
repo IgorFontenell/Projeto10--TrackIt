@@ -9,10 +9,10 @@ import * as dayjs from 'dayjs'
 import DoneContext from "../APIContext/DoneContext";
 
 
-// We are creating the page with the Todays habits
+// We are creating the page with the Todays habits.
 export default function TodayPage () {
     
-    // Creating the state variable that is going to att our HTML
+    // Creating the State variable that is going to update our HTML.
     const [habits, setHabits] = useState([{
         id: "",
         name: "",
@@ -21,37 +21,38 @@ export default function TodayPage () {
         highestSequence: ""
     }]);
 
-    // Here we are getting the function that att the value of the States's variable of the number of habits completed today.
+    // Here we are getting the function that updates the value of the States's variable of the number of habits completed today.
     const { habitsDone , setHabitsDone } = useContext(DoneContext);
     
-    // This is the function that gets the value in the api of the number of tasks completed and att in the State's variable with the proper config.
+    // This is the function that gets the value in the api of the number of tasks completed and updates in the State's variable with the proper config.
     function attHabitsDone () {
         const requisition = axios.get("https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits/today", config);
         requisition.then(ans => {
                 const doneHabits = ans.data.filter(object => object.done).length;
                 const totalHabits = ans.data.length;
+                setHabits(ans.data);
                 if(totalHabits === 0){
                 setHabitsDone (0);
                 } else {
                     setHabitsDone (Math.ceil((doneHabits/totalHabits)*100));
                 }
                 });
-
+                
     }
     
 
 
-    // Getting back the infos about the user
+    // Getting back the infos about the user.
     const { userInfos } = useContext(InfoContext);
 
-    // Creating the Token to acess the server
+    // Creating the Token to acess the server.
     const config = {
         headers: {
             "Authorization": `Bearer ${userInfos.token}`
         }
     }
 
-    // Getting the server information about the habits only once and att in the state variable
+    // Getting the server information about the habits only once and update it at the state variable.
     useEffect((() => {
         const requisition = axios.get("https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits/today", config);
         requisition.then(ans => {
@@ -82,7 +83,7 @@ export default function TodayPage () {
         }
     }
 
-    // Creating the function that will return all the Habit's components. It will be this function that we will write in the return
+    // Creating the function that will return all the Habit's components. It will be this function that we will write in the return function.
     function TodayHabitList () {
 
 

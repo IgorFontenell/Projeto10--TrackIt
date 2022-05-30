@@ -6,10 +6,15 @@ import InfoContext from "../APIContext/InforContext";
 
 
 export default function Habit ( { name, id, days, reload } ) {
-    let allDays = [1, 2, 3, 4, 5, 6, 7];
+    
+    //We are creating the a Array with all the numbers that represent the days of the week and the Array that will recive the true or false if the days were selected or not.
+    let allDays = [0, 1, 2, 3, 4, 5, 6];
     let newData = [];
+
+    // Getting the user Information.
     const {userInfos} = useContext(InfoContext);
 
+    // Function that returns the newData as an Array of true and false, beeing true meaning that the habit were selected to be done at that day.
     function verification () {
      newData = allDays.map(num => {
             if (days.includes(num)) {
@@ -21,6 +26,7 @@ export default function Habit ( { name, id, days, reload } ) {
        });
     }
 
+    // Function that sends a request to the API to delete that habit from the API and reload all the habits in the page.
     function Delete () {
         const config = {
             headers: {
@@ -37,13 +43,13 @@ export default function Habit ( { name, id, days, reload } ) {
             <span>{name}</span>
             <ion-icon name="trash-outline" onClick={Delete}></ion-icon>
             <Squares>
-                <FixedSquare selected={newData[6]} value="D"></FixedSquare>
-                <FixedSquare selected={newData[0]} value="S"></FixedSquare>
-                <FixedSquare selected={newData[1]} value="T"></FixedSquare>
-                <FixedSquare selected={newData[2]} value="Q"></FixedSquare>
+                <FixedSquare selected={newData[0]} value="D"></FixedSquare>
+                <FixedSquare selected={newData[1]} value="S"></FixedSquare>
+                <FixedSquare selected={newData[2]} value="T"></FixedSquare>
                 <FixedSquare selected={newData[3]} value="Q"></FixedSquare>
-                <FixedSquare selected={newData[4]} value="S"></FixedSquare>
+                <FixedSquare selected={newData[4]} value="Q"></FixedSquare>
                 <FixedSquare selected={newData[5]} value="S"></FixedSquare>
+                <FixedSquare selected={newData[6]} value="S"></FixedSquare>
             </Squares>
         </Box>
     );

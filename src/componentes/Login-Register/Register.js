@@ -11,6 +11,7 @@ export default function Register () {
 
     const [isLoading, setIsLoading] = useState(false);
 
+    // A function that desativates the button while waiting for the API to work. We are putting a delay gif to make more USER friendly.
     function IsButton () {
 
         if (isLoading === false) {

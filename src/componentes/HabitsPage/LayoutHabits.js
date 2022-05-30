@@ -5,26 +5,28 @@ import styled from "styled-components";
 import Habit from "./Habit";
 import InfoContext from "../APIContext/InforContext";
 import NewHabit from "./NewHabit";
-import Nothing from "./Nothing";
 import Bottom from "../Top-Bot/Bottom";
 
 
 
 export default function LayoutHabits () {
 
+    // We are creating a State variable that represent the act of tring to creat a habit.
     const [createHabit, setCreateHabit] = useState("false");
+
+    // We are creating a State variable that keeps the information about  the habits that we are getting from the API.
     const [habitsInfo, setHabitsInfo] = useState([]);
     
     // Getting the user infos
     const { userInfos } = useContext(InfoContext);
 
-    // Creating the token that validates my acess to the API
+    // Creating the token that validates my acess to the API.
     const config = {
         headers: {
             "Authorization": `Bearer ${userInfos.token}`
         }
     }
-    // Getting the API information about the user only once, I shaw get the array and translate to the component using map
+    // Getting the API information about the user only once, and update the state variable with it.
      useEffect ((() =>{
          const requisition = axios.get("https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits", config);
          requisition.then(ans => {
@@ -33,6 +35,7 @@ export default function LayoutHabits () {
 
      }), []);
 
+     // Function that gets again the information in the API and rewrit it, we are going to use it always when some change in the API happens.
      function reload () {
 
         const requisition = axios.get("https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits", config);
@@ -43,13 +46,13 @@ export default function LayoutHabits () {
 
      }
 
-    
+    // The function that actualy writes each habit to be written.
     function CallingHabit () {
 
       return  habitsInfo.map(value => <Habit name={value.name} key={value.id} id={value.id} days={value.days} reload={reload} />);
 
     }
-   
+    // Function called when there is no habbit created yet.
     function NoHabit () {
         return (<span>Você não tem nenhum hábito cadastrado ainda. Adicione um hábito para começar a trackear!</span>);
     }
@@ -67,7 +70,7 @@ export default function LayoutHabits () {
                     <ion-icon name="add-outline" onClick={() => setCreateHabit(true)}></ion-icon>
             </LittleTop>
             <Habits>
-                {(createHabit === true) ? <NewHabit reload={reload} setCreateHabit={setCreateHabit} /> : <Nothing />} 
+                {(createHabit === true) ? <NewHabit reload={reload} setCreateHabit={setCreateHabit} /> : <></>} 
                 {(habitsInfo.length !== 0) ?  <CallingHabit /> : <NoHabit /> }
             </Habits>
             <Bottom />

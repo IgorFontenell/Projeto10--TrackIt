@@ -5,7 +5,7 @@ export default function Square ( { value, number, newHabitInfo, setNewHabitInfo 
 
     const [selected, setSelected] = useState(false);
 
-    // Here, we Att the infos about the days that were selected
+    // Here, we update the infos about the days that were selected.
     function attDays () {
         setNewHabitInfo({
             ...newHabitInfo, ["days"]: [...newHabitInfo.days, number],
