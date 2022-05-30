@@ -4,7 +4,7 @@ import axios from 'axios';
 import styled from 'styled-components';
 import Logo from "../Libary/Logo.png";
 import InfoContext from '../APIContext/InforContext';
-
+import { ThreeDots } from  'react-loader-spinner'
 
 export default function Login () {
     // Creating the navigate function
@@ -13,7 +13,26 @@ export default function Login () {
     // Getting the APIContext info
     const { setUserInfos } = useContext(InfoContext);
     
+    const [isLoading, setIsLoading] = useState(false);
 
+
+    function IsButton () {
+
+        if (isLoading === false) {
+            return (
+                    <button type="submit" >
+                        <span>Entrar</span>
+                    </button>
+            );
+        } else if (isLoading === true) {
+            return (
+                    <div className="NoButton" >
+                        <ThreeDots color="#FFFFFF" height={40} width={40} />
+                    </div>
+            );
+        }
+
+    }
     // Estate variable that has the inputs values
     const [ form, setForm ] = useState({
         email: "",
@@ -30,7 +49,7 @@ export default function Login () {
     // Here's the main function. When the user click on the button, this function is called and the things that it do are: prevent the automatic reload of the page, send the email and password to the server, att the estate variable with the client infos that are in the server, navigate to the next page and send a error alert in case of failer.
     function loginInto (event) {
         event.preventDefault();
-        
+        setIsLoading(true);
 
         const requisition = axios.post("https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/auth/login", form);
         requisition.then(ans => {
@@ -44,21 +63,24 @@ export default function Login () {
             });
 
             navigate("/hoje");
+            setIsLoading(false);
         });
-        requisition.catch(err => alert(`${err.response.status} - ${err.response.data.message}`));
+        requisition.catch(err => {
+            alert(`${err.response.status} - ${err.response.data.message}`);
+            setIsLoading(false);
+        });
 
     }
 
     
     return (
+            
             <Container>
                 <Link to="/" ><img src={Logo} width="180" alt="Logo TrackIt carregando" /></Link>
-               <form onSubmit={loginInto}>
+               <form onSubmit={loginInto} disabled>
                     <input type="email" name="email" placeholder="email" value={form.description} onChange={attForms} required />
                     <input type="password" name="password" placeholder="senha" value={form.description} onChange={attForms} required />
-                    <button type="submit">
-                        <span>Entrar</span>
-                    </button>
+                    <IsButton />
                     <Link to="/cadastro" >
                         <span>Não tem uma conta? Cadastre-se!</span>
                     </Link>
@@ -127,6 +149,19 @@ const Container = styled.div`
         color: #52B6FF;
         font-family: 'Roboto', sans-serif;
         font-size: 14px;
+    }
+    .NoButton {
+        margin-top: 10px;
+        width: 303px;
+        height: 45px;
+        background-color: #52B6FF;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 5px;
+        margin-bottom: 10px;
+        border: none;
+        opacity: 0.4;
     }
 
 `;

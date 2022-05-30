@@ -3,10 +3,31 @@ import { useState } from "react";
 import axios from "axios";
 import styled from 'styled-components';
 import Logo from "../Libary/Logo.png";
+import { ThreeDots } from  'react-loader-spinner'
 
 export default function Register () {
 
     const navigate = useNavigate();
+
+    const [isLoading, setIsLoading] = useState(false);
+
+    function IsButton () {
+
+        if (isLoading === false) {
+            return (
+                    <button type="submit" >
+                        <span>Entrar</span>
+                    </button>
+            );
+        } else if (isLoading === true) {
+            return (
+                    <div className="NoButton" >
+                        <ThreeDots color="#FFFFFF" height={40} width={40} />
+                    </div>
+            );
+        }
+
+    }
 
     const [form, setForm] = useState({
         email: "",
@@ -25,12 +46,17 @@ export default function Register () {
     
     function loginInto (event) {
         event.preventDefault();
-        
+        setIsLoading(true);
+
         const requisition = axios.post("https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/auth/sign-up", form);
         requisition.then(ans => {
-            navigate("/")
+            navigate("/");
+            setIsLoading(false);
         });
-        requisition.catch(err => alert(`${err.response.status} - ${err.response.data.message}`));
+        requisition.catch(err => {
+            alert(`${err.response.status} - ${err.response.data.message}`);
+            setIsLoading(false);
+        });
         
 
     }
@@ -43,9 +69,7 @@ export default function Register () {
                 <input type="password" name="password" placeholder="senha" onChange={attForms} value={form.description} required />
                 <input type="text" name="name" placeholder="nome" onChange={attForms} value={form.description} required />
                 <input type="url" name="image" placeholder="foto" onChange={attForms} value={form.description} required />
-                <button type="submit">
-                    <span>Cadastrar</span>
-                </button>
+                <IsButton />
             </form>
             <Link to="/" >
                 <span>Já tem uma conta? Faça login!</span>
@@ -112,6 +136,19 @@ const Container = styled.div`
         color: #52B6FF;
         font-family: 'Roboto', sans-serif;
         font-size: 14px;
+    }
+    .NoButton {
+        margin-top: 10px;
+        width: 303px;
+        height: 45px;
+        background-color: #52B6FF;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 5px;
+        margin-bottom: 10px;
+        border: none;
+        opacity: 0.4;
     }
 
 `;

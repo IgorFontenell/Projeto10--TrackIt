@@ -28,7 +28,6 @@ export default function TodayPage () {
     function attHabitsDone () {
         const requisition = axios.get("https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits/today", config);
         requisition.then(ans => {
-                console.log(ans);
                 const doneHabits = ans.data.filter(object => object.done).length;
                 const totalHabits = ans.data.length;
                 if(totalHabits === 0){
@@ -63,6 +62,26 @@ export default function TodayPage () {
         });
     }), []);
 
+
+    function DayOfToday () {
+        let today = dayjs();
+        if (today.format("dddd") === "Monday") {
+            return (`Segunda,  ${today.format("DD/MM")}`)
+        } else if (today.format("dddd") === "Tuesday") {
+            return (`Terça,  ${today.format("DD/MM")}`)
+        } else if (today.format("dddd") === "Wednesday") {
+            return (`Quarta,  ${today.format("DD/MM")}`)
+        } else if (today.format("dddd") === "Thursday") {
+            return (`Quinta,  ${today.format("DD/MM")}`)
+        } else if (today.format("dddd") === "Friday") {
+            return (`Sexta,  ${today.format("DD/MM")}`)
+        } else if (today.format("dddd") === "Sartuday") {
+            return (`Sábado,  ${today.format("DD/MM")}`)
+        } else if (today.format("dddd") === "Sunday") {
+            return (`Domingo,  ${today.format("DD/MM")}`)
+        }
+    }
+
     // Creating the function that will return all the Habit's components. It will be this function that we will write in the return
     function TodayHabitList () {
 
@@ -76,7 +95,7 @@ export default function TodayPage () {
     return (
         <Container>
             <Top />
-            <h1>{`${dayjs().format()}`}</h1>
+            <h1><DayOfToday /></h1>
             {habitsDone === 0 ? <h2>Nenhum hábito concluído ainda</h2> : <h3>{habitsDone} dos hábitos concluídos</h3>}
             {habits.length !== 0 ? <TodayHabitList /> : <div></div>}
             <Bottom />
@@ -109,6 +128,7 @@ const Container = styled.div`
        color: #BABABA;
        display: inline-block;
        margin-bottom: 25px;
+       margin-top: 15px;
     }
     h3 {
        font-family: 'Roboto', sans-serif;

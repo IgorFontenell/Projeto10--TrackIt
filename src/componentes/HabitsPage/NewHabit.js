@@ -3,13 +3,35 @@ import styled from "styled-components";
 import axios from "axios";
 import InfoContext from "../APIContext/InforContext";
 import Square from "./Square";
-
+import { ThreeDots } from  'react-loader-spinner'
 
 export default function NewHabit ( { setCreateHabit, reload } ) {
 
     // Here, we are getting the UserInfos saved
     const { userInfos } = useContext(InfoContext);
     
+    const [isLoading, setIsLoading] = useState(false);
+
+    function IsButton () {
+
+        if (isLoading === false) {
+            return (
+                <>
+                <span onClick={cancel}>Cancelar</span>
+                <span onClick={sendInfo}>Salvar</span>
+                </>
+                
+            );
+        } else if (isLoading === true) {
+            return (
+                <>
+                <span>Cancelar</span>
+                <span><ThreeDots color="#FFFFFF" height={30} width={30} /></span>
+                </>
+            );
+        }
+
+    }
     
     // Here, we created the state variable so we can stock the value of the creating Habit
     const [newHabitInfo, setNewHabitInfo] = useState({
@@ -38,6 +60,7 @@ export default function NewHabit ( { setCreateHabit, reload } ) {
         if (newHabitInfo.name === "" || newHabitInfo.days === "") {
             alert("Dados incompletos, favor terminar o preenchimento")
         } else {
+            setIsLoading(true);
             const config = {
                 headers: {
                     "Authorization": `Bearer ${userInfos.token}`
@@ -45,7 +68,8 @@ export default function NewHabit ( { setCreateHabit, reload } ) {
             }; 
             const requisiton = axios.post("https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits", newHabitInfo, config);
             requisiton.then(() => {
-                alert("Hábito enviado com sucesso!")
+                setIsLoading(false);
+                alert("Hábito enviado com sucesso!");
                 cancel();
                 reload();
                 });
@@ -56,7 +80,7 @@ export default function NewHabit ( { setCreateHabit, reload } ) {
     }
 
     return (
-        <Box>
+        <Box disabled>
             <input type="name" placeholder="nome do hábito" onChange={attName}></input>
             <Squares>
                 <Square newHabitInfo={newHabitInfo} setNewHabitInfo={setNewHabitInfo} value="D" number={7} />
@@ -68,8 +92,7 @@ export default function NewHabit ( { setCreateHabit, reload } ) {
                 <Square newHabitInfo={newHabitInfo} setNewHabitInfo={setNewHabitInfo} value="S" number={6} />
             </Squares>
             <ConfigBox>
-                <span onClick={cancel}>Cancelar</span>
-                <span onClick={sendInfo}>Salvar</span>
+                <IsButton />
             </ConfigBox>
         </Box>
     );

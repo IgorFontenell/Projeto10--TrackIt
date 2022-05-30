@@ -6,6 +6,7 @@ import Register from "./Login-Register/Register";
 import LayoutHabits from "./HabitsPage/LayoutHabits";
 import DoneContext from "./APIContext/DoneContext";
 import TodayPage from "./TodayHabits/TodayPage";
+import HistoryPage from "./History/HistoryPage";
 
 
 
@@ -31,6 +32,7 @@ export default function App () {
                 <Route path="/cadastro" element={<Register />} /> 
                 <Route path="/habitos" element={<LayoutHabits />} />
                 <Route path="/hoje" element={<TodayPage />} />
+                <Route path="/historico" element={<HistoryPage />} />
             </Routes>
         </BrowserRouter>
         </InfoContext.Provider>

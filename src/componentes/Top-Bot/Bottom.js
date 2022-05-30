@@ -34,7 +34,9 @@ export default function Bottom () {
                         })} /> 
                     </div>
            </Link>
-            <span>Histórico</span>
+           <Link to="/historico">
+                <span>Histórico</span>
+            </Link>
         </BottomDiv>);
 
 
